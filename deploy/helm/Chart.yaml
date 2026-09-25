@@ -1,0 +1,4 @@
+apiVersion: v2
+name: autonomous-agent-orchestrator
+version: 0.1.0
+type: application
