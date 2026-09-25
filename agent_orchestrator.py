@@ -1,10 +1,10 @@
 """Bounded agent orchestration: explicit states, tool policy and audit trail."""
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 
-class State(str, Enum):
+class State(StrEnum):
     PLANNED = "planned"
     RUNNING = "running"
     SUCCEEDED = "succeeded"
