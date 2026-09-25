@@ -5,13 +5,13 @@ import time
 import uuid
 
 from fastapi import Request
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import Response
 
 from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 
 
 def configure_observability():
