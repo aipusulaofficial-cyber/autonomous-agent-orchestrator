@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: autonomous-agent-orchestrator}
+spec:
+ replicas: 2
+ selector: {matchLabels: {app: autonomous-agent-orchestrator}}
+ template:
+  metadata: {labels: {app: autonomous-agent-orchestrator}}
+  spec:
+   containers:
+   - name: api
+     image: autonomous-agent-orchestrator:latest
+     ports: [{containerPort: 8000}]
+     readinessProbe: {httpGet: {path: /health/ready, port: 8000}}
+     livenessProbe: {httpGet: {path: /health/live, port: 8000}}
