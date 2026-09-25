@@ -1,5 +1,6 @@
-from job_runner import *
 import pytest
+
+from job_runner import *
 
 
 def test_success_audit():
