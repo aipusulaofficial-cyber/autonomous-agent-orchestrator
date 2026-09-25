@@ -3,13 +3,18 @@ from opentelemetry import trace
 from pydantic import BaseModel, Field
 
 from agent_domain import Task
-from observability import configure_observability, get_logger
+from observability import (
+    PrincipalObservabilityMiddleware,
+    configure_observability,
+    get_logger,
+)
 
 configure_observability()
 logger = get_logger(__name__)
 tracer = trace.get_tracer("autonomous-agent-orchestrator")
 
 app = FastAPI(title="autonomous-agent-orchestrator", version="1.0.0")
+app.add_middleware(PrincipalObservabilityMiddleware)
 
 
 class TaskRequest(BaseModel):
