@@ -1,6 +1,6 @@
 import pytest
 
-from agent_domain import Task, TaskState, enforce_step_budget
+from agent_domain import Task, TaskState, ToolPolicy, enforce_step_budget
 
 
 def test_task_lifecycle_and_attempt_count() -> None:
@@ -10,6 +10,17 @@ def test_task_lifecycle_and_attempt_count() -> None:
     assert task.attempts == 1
     task.finish(True)
     assert task.state is TaskState.SUCCEEDED
+
+
+def test_task_retry_is_bounded() -> None:
+    task = Task("task-1", max_attempts=2)
+    task.start()
+    task.finish(False)
+    task.retry()
+    task.start()
+    task.finish(False)
+    with pytest.raises(RuntimeError):
+        task.retry()
 
 
 def test_task_rejects_invalid_transitions() -> None:
@@ -49,3 +60,17 @@ def test_step_budget_rejects_invalid_configuration(completed: int, limit: int) -
 def test_task_requires_id() -> None:
     with pytest.raises(ValueError):
         Task(" ")
+
+
+def test_tool_policy_authorizes_only_declared_tools() -> None:
+    policy = ToolPolicy(frozenset({"search", "calculator"}), max_steps=10)
+    policy.authorize("search")
+    with pytest.raises(PermissionError):
+        policy.authorize("shell")
+
+
+def test_tool_policy_rejects_invalid_configuration() -> None:
+    with pytest.raises(ValueError):
+        ToolPolicy(frozenset({"search", ""}))
+    with pytest.raises(ValueError):
+        ToolPolicy(frozenset({"search"}), max_steps=0)
