@@ -34,12 +34,18 @@ def handle(request: TaskRequest) -> dict[str, str | int]:
         try:
             task = Task(request.key)
             task.start()
-            logger.info("agent_task_started", extra={"task_id": task.id, "attempts": task.attempts})
+            logger.info(
+                "agent_task_started",
+                extra={"task_id": task.id, "attempts": task.attempts},
+            )
             return {
                 "task_id": task.id,
                 "state": task.state,
                 "attempts": task.attempts,
             }
         except ValueError as exc:
-            logger.warning("agent_task_rejected", extra={"task_id": request.key, "reason": str(exc)})
+            logger.warning(
+                "agent_task_rejected",
+                extra={"task_id": request.key, "reason": str(exc)},
+            )
             raise HTTPException(status_code=400, detail=str(exc)) from exc
