@@ -1,7 +1,11 @@
-from runtime_evidence import runtime_evidence
 import time
 
+from runtime_evidence import runtime_evidence
+
+
 def test_foundation_contract():
-    e=runtime_evidence(request_id="foundation",stage="agent",decision="ALLOW",started=time.perf_counter())
-    assert e["stage"] == "agent"
-    assert e["trace_id"]
+    evidence = runtime_evidence(
+        request_id="foundation", stage="agent", decision="ALLOW", started=time.perf_counter()
+    )
+    assert evidence["stage"] == "agent"
+    assert evidence["trace_id"]
