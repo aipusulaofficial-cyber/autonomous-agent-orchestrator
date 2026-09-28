@@ -9,7 +9,6 @@ from agent_domain import Task
 from observability import PrincipalObservabilityMiddleware, configure_observability, get_logger
 from runtime_evidence import request_id_from_headers, runtime_evidence
 
-
 configure_observability()
 logger = get_logger(__name__)
 tracer = trace.get_tracer("autonomous-agent-orchestrator")
