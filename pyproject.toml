@@ -15,4 +15,4 @@ dev = ["pytest-cov>=5,<7", "mypy>=1.13,<2", "pytest>=8","hypothesis>=6","ruff>=0
 pythonpath=["."]
 
 [tool.setuptools]
-py-modules=["service","agent_domain"]
+py-modules=["agent_domain","agent_orchestrator","durable_jobs","job_runner","observability","resilience","service"]
