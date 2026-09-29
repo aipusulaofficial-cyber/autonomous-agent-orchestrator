@@ -1,7 +1,9 @@
+import json
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import json
+
 from agent_domain import Task,ToolPolicy
 t=Task("evidence",max_attempts=2); t.start(); t.finish(False); t.retry(); t.start(); t.finish(True)
 p=ToolPolicy(frozenset({"search"})); allowed=False; blocked=False; p.authorize("search"); allowed=True
