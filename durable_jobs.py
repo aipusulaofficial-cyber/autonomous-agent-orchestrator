@@ -32,8 +32,12 @@ class DurableJobStore:
             )
 
     def transition(
-        self, job_id: str, expected_state: str, target_state: str,
-        payload: str, updated_at: str,
+        self,
+        job_id: str,
+        expected_state: str,
+        target_state: str,
+        payload: str,
+        updated_at: str,
     ) -> bool:
         """Atomically advance a persisted job only when its expected state matches."""
         allowed = {
