@@ -1,6 +1,6 @@
 import pytest
 
-from job_runner import Job, JobRunner, State
+from job_runner import Job, JobRunner
 
 
 def test_completed_job_cannot_run_again():
