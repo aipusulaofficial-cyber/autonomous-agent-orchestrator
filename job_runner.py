@@ -19,10 +19,14 @@ class Job:
 
 class JobRunner:
     def __init__(self, allowed, max_actions=8):
+        if isinstance(max_actions, bool) or not isinstance(max_actions, int) or max_actions < 0:
+            raise ValueError("max_actions must be a non-negative integer")
         self.allowed = allowed
         self.max_actions = max_actions
 
     def run(self, j):
+        if j.state != State.PLANNED:
+            raise ValueError("only planned jobs may be executed")
         if len(j.actions) > self.max_actions:
             raise ValueError("action budget exceeded")
         j.state = State.RUNNING
