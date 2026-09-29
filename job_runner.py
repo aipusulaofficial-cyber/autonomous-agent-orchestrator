@@ -19,10 +19,14 @@ class Job:
 
 class JobRunner:
     def __init__(self, allowed, max_actions=8):
+        if max_actions < 1:
+            raise ValueError("max_actions must be positive")
         self.allowed = allowed
         self.max_actions = max_actions
 
     def run(self, j):
+        if j.state is not State.PLANNED:
+            raise ValueError("job must be planned before execution")
         if len(j.actions) > self.max_actions:
             raise ValueError("action budget exceeded")
         j.state = State.RUNNING
