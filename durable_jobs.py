@@ -48,8 +48,7 @@ class DurableJobStore:
             raise ValueError("invalid job state transition")
         with self._lock, self._connect() as db:
             result = db.execute(
-                "UPDATE jobs SET state=?, payload=?, updated_at=? "
-                "WHERE id=? AND state=?",
+                "UPDATE jobs SET state=?, payload=?, updated_at=? WHERE id=? AND state=?",
                 (target_state, payload, updated_at, job_id, expected_state),
             )
             return result.rowcount == 1
