@@ -1,5 +1,10 @@
 # Autonomous Agent Orchestrator
 
+[![CI](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/ci.yml)
+[![Production Tests](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/production-tests.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/production-tests.yml)
+[![Security / SBOM](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/security-sbom.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/autonomous-agent-orchestrator/actions/workflows/security-sbom.yml)
+
+
 An orchestration runtime for policy-controlled agent planning, tool execution, state propagation and recovery.
 
 ## Execution lifecycle
