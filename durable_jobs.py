@@ -31,6 +31,28 @@ class DurableJobStore:
                 (job_id, state, payload, updated_at),
             )
 
+    def transition(
+        self,
+        job_id: str,
+        expected_state: str,
+        target_state: str,
+        payload: str,
+        updated_at: str,
+    ) -> bool:
+        """Atomically advance a persisted job only when its expected state matches."""
+        allowed = {
+            "planned": {"running"},
+            "running": {"succeeded", "failed"},
+        }
+        if target_state not in allowed.get(expected_state, set()):
+            raise ValueError("invalid job state transition")
+        with self._lock, self._connect() as db:
+            result = db.execute(
+                "UPDATE jobs SET state=?, payload=?, updated_at=? WHERE id=? AND state=?",
+                (target_state, payload, updated_at, job_id, expected_state),
+            )
+            return result.rowcount == 1
+
     def get(self, job_id: str):
         with self._connect() as db:
             return db.execute(
