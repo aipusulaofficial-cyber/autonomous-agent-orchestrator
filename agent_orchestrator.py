@@ -33,7 +33,9 @@ class Orchestrator:
             raise ValueError("task is not runnable from its current state")
         if not isinstance(t.id, str) or not t.id.strip():
             raise ValueError("task id is required")
-        if not isinstance(t.steps, list) or any(not isinstance(step, str) or not step for step in t.steps):
+        if not isinstance(t.steps, list) or any(
+            not isinstance(step, str) or not step for step in t.steps
+        ):
             raise ValueError("task steps must be non-empty strings")
         if len(t.steps) > self.max_steps:
             raise ValueError("step budget exceeded")
