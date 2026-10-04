@@ -20,6 +20,7 @@ def test_invalid_action_budget_rejected():
 
 def test_legacy_orchestrator_rejects_terminal_replay():
     from agent_orchestrator import Orchestrator, Task
+
     calls = []
     orchestrator = Orchestrator({"tool": lambda: calls.append("called")})
     task = Task("legacy", ["tool"])
