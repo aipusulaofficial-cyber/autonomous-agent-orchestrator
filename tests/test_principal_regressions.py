@@ -16,3 +16,14 @@ def test_completed_job_cannot_run_again():
 def test_invalid_action_budget_rejected():
     with pytest.raises(ValueError):
         JobRunner({}, max_actions=0)
+
+
+def test_legacy_orchestrator_rejects_terminal_replay():
+    from agent_orchestrator import Orchestrator, Task
+    calls = []
+    orchestrator = Orchestrator({"tool": lambda: calls.append("called")})
+    task = Task("legacy", ["tool"])
+    orchestrator.run(task)
+    with pytest.raises(ValueError):
+        orchestrator.run(task)
+    assert calls == ["called"]
