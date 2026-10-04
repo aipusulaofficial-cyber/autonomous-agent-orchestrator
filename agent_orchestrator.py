@@ -21,10 +21,20 @@ class Task:
 
 class Orchestrator:
     def __init__(self, tools, max_steps=8):
+        if isinstance(max_steps, bool) or not isinstance(max_steps, int) or max_steps < 1:
+            raise ValueError("max_steps must be a positive integer")
+        if not isinstance(tools, dict) or any(not callable(tool) for tool in tools.values()):
+            raise ValueError("tools must be a mapping of callables")
         self.tools = tools
         self.max_steps = max_steps
 
     def run(self, t):
+        if t.state is not State.PLANNED:
+            raise ValueError("task is not runnable from its current state")
+        if not isinstance(t.id, str) or not t.id.strip():
+            raise ValueError("task id is required")
+        if not isinstance(t.steps, list) or any(not isinstance(step, str) or not step for step in t.steps):
+            raise ValueError("task steps must be non-empty strings")
         if len(t.steps) > self.max_steps:
             raise ValueError("step budget exceeded")
         t.state = State.RUNNING
